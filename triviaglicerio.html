@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<!-- ESTILOS PARA EL MODAL-->
+<style>
+.modal {
+ display: none; /* oculto hasta abrir */
+ position: fixed;
+ left: 0; top: 0;
+ width: 100%; height: 100%;
+ background-color: rgba(0,0,0,0.5);
+ z-index: 1000;
+}
+.modal-contenido {
+ background: white;
+ margin: 5% auto;
+ padding: 20px;
+ border-radius: 10px;
+ max-width: 600px;
+ max-height: 80vh;
+ overflow-y: auto;
+}
+.cerrar { float: right; cursor: pointer; font-size: 24px; }
+.correcta { color: green; }
+.incorrecta { color: red; }
+#resultado { margin-top: 1em; } 
+</style>
+</head>
+<body>
+    <!-- SECCIÓN PARA JUGAR TRIVIA -->
+<section id="jugar-trivia">
+<h2>¿Te animas a poner a prueba tus conocimientos?</h2>
+<button id="abrirTrivia">Comenzar Trivia</button>
+</section>
+<!-- MODAL -->
+<div id="modalTrivia" class="modal">
+ <div class="modal-contenido">
+ <span class="cerrar">&times;</span>
+ <!-- Aquí irá el formulario y resultados -->
+ <h2>Trivia sobre Glicerio Landreani</h2>
+<form id="formTrivia">
+ <p><strong>1.</strong> ¿Cuándo nació Glicerio Landreani?</p>
+ <label><input type="radio" name="p1" value="1 de marzo de 1568"> 1 de marzo de 1568</label><br>
+ <label><input type="radio" name="p1" value="1 de marzo de 1578"> 1 de marzo de 1578</label><br>
+ <label><input type="radio" name="p1" value="1 de marzo de 1588"> 1 de marzo de 1588</label><br>
+
+ <p><strong>2.</strong> . ¿En donde nació? </p>
+ <label><input type="radio" name="p2" value="Milán"> Milán</label><br>
+ <label><input type="radio" name="p2" value="Roma"> Roma</label><br>
+ <label><input type="radio" name="p2" value="Florencia"> Florencia</label><br><br>
+
+ <p><strong>3.</strong> .  ¿Cuáles fueron sus estudios? </p>
+ <label><input type="radio" name="p3" value="Filosofía, leyes y teología"> Filosofía, leyes y teología</label><br>
+ <label><input type="radio" name="p3" value="Medicina, derecho y teología"> Medicina, derecho y teología</label><br>
+ <label><input type="radio" name="p3" value="Barcelona"> Artes liberales, teología y música</label><br><br>
+
+ <p><strong>4.</strong> . ¿Cuándo ingresó a la orden?  </p>
+ <label><input type="radio" name="p4" value="31 de marzo de 1612"> 31 de marzo de 1612</label><br>
+ <label><input type="radio" name="p4" value="31 de julio de 1612"> 31 de julio de 1612</label><br>
+ <label><input type="radio" name="p4" value="31 de mayo de 1612"> 31 de mayo de 1612</label><br><br>
+ 
+ <p><strong>5.</strong> . ¿Qué piensa sobre la vanidad en favor de Cristo? </p>
+ <label><input type="radio" name="p5" value="“Dejó inmediatamente palacio, ropajes y servidumbre… Me volveré un mendigo de Cristo y servidor de sus pobres.”"> “Dejó inmediatamente palacio, ropajes y servidumbre… Me volveré un mendigo de Cristo y servidor de sus pobres.”</label><br>
+ <label><input type="radio" name="p5" value="“Queriendo alcanzar a Cristo decido dejarlo todo por amor a Él y me entrego en las mediaciones que Él quiere enviarme… al trabajo catequístico con los pequeños y a la asidua vida sacramental.”"> “Queriendo alcanzar a Cristo decido dejarlo todo por amor a Él y me entrego en las mediaciones que Él quiere enviarme… al trabajo catequístico con los pequeños y a la asidua vida sacramental.”</label><br>
+ <label><input type="radio" name="p5" value="“Vine aquí sin que yo lo buscase, solo por pura obediencia a los superiores… estar en todo resignado a la voluntad de Dios nuestro Señor y de los superiores.”"> “Vine aquí sin que yo lo buscase, solo por pura obediencia a los superiores… estar en todo resignado a la voluntad de Dios nuestro Señor y de los superiores.”</label><br><br>
+ <button type="submit">Enviar respuestas</button>
+</form>
+<div id="resultado"></div> 
+ </div>
+</div> 
+<!-- SCRIPT básico para abrir/cerrar el MODAL-->
+<script>
+const modal = document.getElementById("modalTrivia");
+const btnAbrir = document.getElementById("abrirTrivia");
+const btnCerrar = document.querySelector(".cerrar");
+btnAbrir.onclick = () => { modal.style.display = "block"; };
+btnCerrar.onclick = () => { modal.style.display = "none"; };
+window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+document.getElementById("formTrivia").addEventListener("submit", function(e) {
+ e.preventDefault();
+ // Variable para puntaje
+ let puntaje = 0;
+ let salida = "";
+ // Capturamos la respuesta de la PREGUNTA 1
+ let r1 = document.querySelector('input[name="p1"]:checked');
+ // Validamos
+ if (r1) {
+ if (r1.value === "1 de marzo de 1588") {
+ puntaje++;
+ salida += "<p class='correcta'>1. Correcta</p>";
+ } else {
+ salida += "<p class='incorrecta'>1. Incorrecta. Correcta: 1 de marzo de 1588</p>";
+ }
+ } else {
+ salida += "<p class='incorrecta'>1. No respondida. Correcta: 1 de marzo de 1588</p>";
+ }
+// Capturamos la respuesta de la PREGUNTA 2
+let r2 = document.querySelector('input[name="p2"]:checked');
+ // Validamos
+ if (r2) {
+ if (r2.value === "Milán") {
+ puntaje++;
+ salida += "<p class='correcta'>2. Correcta</p>";
+ } else {
+ salida += "<p class='incorrecta'>2. Incorrecta. Correcta: Milán</p>";
+ }
+ } else {
+ salida += "<p class='incorrecta'>2. No respondida. Correcta: Milán</p>";
+ }
+// Capturamos la respuesta de la PREGUNTA 3
+let r3 = document.querySelector('input[name="p3"]:checked');
+ // Validamos
+ if (r3) {
+ if (r3.value === "Filosofía, leyes y teología") {
+ puntaje++;
+ salida += "<p class='correcta'>3. Correcta</p>";
+ } else {
+ salida += "<p class='incorrecta'>3. Incorrecta. Correcta: Filosofía, leyes y teología</p>";
+ }
+ } else {
+ salida += "<p class='incorrecta'>3. No respondida. Correcta: Filosofía, leyes y teología</p>";
+ }
+// Capturamos la respuesta de la PREGUNTA 4
+let r4 = document.querySelector('input[name="p4"]:checked');
+ // Validamos
+ if (r4) {
+ if (r4.value === "31 de mayo de 1612") {
+ puntaje++;
+ salida += "<p class='correcta'>4. Correcta</p>";
+ } else {
+ salida += "<p class='incorrecta'>4. Incorrecta. Correcta: 31 de mayo de 1612</p>";
+ }
+ } else {
+ salida += "<p class='incorrecta'>4. No respondida. Correcta: 31 de mayo de 1612</p>";
+ }
+// Capturamos la respuesta de la PREGUNTA 5
+let r5 = document.querySelector('input[name="p5"]:checked');
+ // Validamos
+ if (r5) {
+ if (r5.value === "“Dejó inmediatamente palacio, ropajes y servidumbre… Me volveré un mendigo de Cristo y servidor de sus pobres.”"){
+ puntaje++;
+ salida += "<p class='correcta'>5. Correcta</p>";
+ } else {
+ salida += "<p class='incorrecta'>5. Incorrecta. Correcta: “Dejó inmediatamente palacio, ropajes y servidumbre… Me volveré un mendigo de Cristo y servidor de sus pobres.”</p>";
+ }
+ } else {
+ salida += "<p class='incorrecta'>5. No respondida. Correcta: “Dejó inmediatamente palacio, ropajes y servidumbre… Me volveré un mendigo de Cristo y servidor de sus pobres.”</p>";
+ }
+ salida += `<h4>Puntaje final: ${puntaje} de 5</h4>`;
+ if (puntaje === 5) salida += "¡Excelente trabajo!";
+ else if (puntaje >= 3) salida += "Muy bien, conoces bastante sobre Calasanz.";
+ else salida += "Puedes repasar la página para aprender más."; 
+ document.getElementById("resultado").innerHTML = salida;
+}); 
+</script> 
+</body>
+</html>
